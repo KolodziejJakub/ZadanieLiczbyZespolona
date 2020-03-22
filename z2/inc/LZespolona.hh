@@ -23,6 +23,15 @@ struct  LZespolona {
 
 
 LZespolona  operator + (LZespolona  Skl1,  LZespolona  Skl2);
+LZespolona operator - (LZespolona Skl1, LZespolona Skl2);
+LZespolona operator * (LZespolona Skl1, LZespolona Skl2);
+LZespolona sprzezenie (LZespolona Skl1);
+LZespolona modul (LZespolona Skl1);
+LZespolona operator / (LZespolona Skl1, LZespolona Skl2);
+
+LZespolona utworz(double re, double im);
+void wyswietl(LZespolona Z);
+std::istream & operator >> (std::istream & strm, LZespolona &Z1)
 
 
 #endif

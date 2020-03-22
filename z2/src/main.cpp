@@ -1,5 +1,6 @@
 #include <iostream>
 #include "BazaTestu.hh"
+#include "LZespolona.hh"
 
 using namespace std;
 
@@ -8,8 +9,16 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+  LZespolona L1 = utworz(1,1);
+  LZespolona L2 = utworz(2,2);
+  WyrazenieZesp WZ;
+  WZ.Arg1 = L1;
+  WZ.Arg2 = L2;
+  WZ.Operator = Op_Dodaj;
+ 
 
-  if (argc < 2) {
+
+  /*if (argc < 2) {
     cout << endl;
     cout << " Brak opcji okreslajacej rodzaj testu." << endl;
     cout << " Dopuszczalne nazwy to:  latwy, trudny." << endl;
@@ -42,5 +51,4 @@ int main(int argc, char **argv)
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;
-
-}
+*/}
