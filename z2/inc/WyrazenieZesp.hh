@@ -29,10 +29,10 @@ struct WyrazenieZesp {
  */
 
 
-std::ostream & operator << (std::ostream & strm, WyrazenieZesp  WyrZ);
+std::ostream & operator << (std::ostream & strm, const WyrazenieZesp & WyrZ);
 LZespolona Oblicz(WyrazenieZesp  WyrZ);
 std::istream & operator >> (std::istream & strm, WyrazenieZesp & wyraz);
-std::istream & operator >> (std::istream & strm, Operator & Op);
+//std::istream & operator >> (std::istream & strm, Operator & Op);
 
 
 #endif

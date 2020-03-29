@@ -1,6 +1,8 @@
 #include <iostream>
 #include "BazaTestu.hh"
 #include "LZespolona.hh"
+#include "Statystyki.hh"
+#include "WyrazenieZesp.hh"
 
 using namespace std;
 
@@ -9,16 +11,9 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  LZespolona L1 = utworz(1,1);
-  LZespolona L2 = utworz(2,2);
-  WyrazenieZesp WZ;
-  WZ.Arg1 = L1;
-  WZ.Arg2 = L2;
-  WZ.Operator = Op_Dodaj;
- 
+  LZespolona OdpoUzytkownika, Poprawna;
 
-
-  /*if (argc < 2) {
+  if (argc < 2) {
     cout << endl;
     cout << " Brak opcji okreslajacej rodzaj testu." << endl;
     cout << " Dopuszczalne nazwy to:  latwy, trudny." << endl;
@@ -41,14 +36,45 @@ int main(int argc, char **argv)
   cout << endl;
 
   WyrazenieZesp   WyrZ_PytanieTestowe;
+  statystyki stats;
   
   while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
-    cout << " Czesc rzeczywista pierwszego argumentu: ";
-    cout << WyrZ_PytanieTestowe.Arg1.re << endl;
+    cout << " Oblicz: ";
+    cout << WyrZ_PytanieTestowe << endl;
+    stats.IloscPytan++;
+
+    Poprawna = Oblicz(WyrZ_PytanieTestowe);
+    cout << Poprawna<< endl;
+    cout <<" Twoja odpowiedz: ";
+
+    for(int i=0; i<3; i++)
+    {
+      cin >> OdpoUzytkownika;
+      if(!cin.good())
+      {
+        cout << endl << " Blad. Sprobuj ponownie" << endl;
+        cin.clear();
+        cin.ignore(1000,'\n');
+        cout <<" Twoja odpowiedz: ";
+      }
+      else break;
+    }
+
+    if (OdpoUzytkownika == Oblicz(WyrZ_PytanieTestowe))
+    {
+      stats.DobrychOdpo++;
+      cout << " Odpowiedz poprawna" << endl;
+    }
+    else
+    {
+      cerr<<" Blad. Prawidlowy wynik to:" << Oblicz(WyrZ_PytanieTestowe) << endl;
+    }
   }
 
-  
+  cout << " Ilosc dobrych odpowiedzi: " << stats.DobrychOdpo << "/" << stats.IloscPytan << endl;
+  cout << " Wynik procentowy testu:" << ObliczProcent(stats) << "%" << endl;
+
   cout << endl;
   cout << " Koniec testu" << endl;
   cout << endl;
-*/}
+}

@@ -7,48 +7,68 @@ using std::cout;
  * Tu nalezy zdefiniowac funkcje, ktorych zapowiedzi znajduja sie
  * w pliku naglowkowym.
  */
-std::ostream & operator << (std::ostream & strm, WyrazenieZesp  WyrZ)
+
+
+
+std::ostream & operator << (std::ostream & Strm, const WyrazenieZesp & WyrZ)
 {
-    cout << WyrazenieZesp.Arg1 << WyrazenieZesp.Op << WyrazenieZesp.Arg2;
+    Strm<<WyrZ.Arg1;
+    switch(WyrZ.Op)
+    {
+    case 0 : Strm<<"+" ; break;
+    case 1 : Strm<<"-" ; break;
+    case 2 : Strm<<"*" ; break;
+    case 3 : Strm<<"/" ; break;
+    } 
+    Strm<<WyrZ.Arg2;
 }
 
 LZespolona Oblicz(WyrazenieZesp  WyrZ)
 {
-    switch (WyrazenieZesp.Op)
+  LZespolona Wynik;
+    switch (WyrZ.Op)
     {
         case 0: 
-        LZespolona L1 = WyrZ.Arg1 + WyrZ.Arg2;
+        Wynik = WyrZ.Arg1 + WyrZ.Arg2;
         break;
 
         case 1:
-        LZespolona L1 = WyrZ.Arg1 - WyrZ.Arg2;
+        Wynik = WyrZ.Arg1 - WyrZ.Arg2;
         break;
 
         case 2:
-        LZespolona L1 = WyrZ.Arg1 * WyrZ.Arg2;
+        Wynik = WyrZ.Arg1 * WyrZ.Arg2;
         break;
 
         case 3:
-        LZespolona L1 = WyrZ.Arg1 / WyrZ.Arg2;
+        Wynik = WyrZ.Arg1 / WyrZ.Arg2;
         break;
     }
-
+  return Wynik;
 }
 
 
-std::istream & operator >> (std::istream & strm, WyrazenieZesp & wyraz) 
+std::istream & operator >> (std::istream & Strm, WyrazenieZesp & wyraz) 
 {
-  strm >> wyraz.Arg1 >> wyraz.Op >> wyraz.Arg2;
+  char znak;
+  Strm >> wyraz.Arg1 >> znak >> wyraz.Arg2;
+  switch(znak)
+  {
+    case '+':wyraz.Op = Op_Dodaj; break;
+    case '-':wyraz.Op = Op_Odejmij; break;
+    case '*':wyraz.Op = Op_Mnoz; break;
+    case '/':wyraz.Op = Op_Dziel; break;
+  }
 }
 
-std::istream & operator >> (std::istream & strm, Operator & Op) 
+/*std::istream & operator >> (std::istream & strm, Operator & Op) 
 {
   char znak;
   strm >> znak;
     switch (znak) {
-    case '+':wyraz.Op = Op_Dodaj;
-    case '-':wyraz.Op = Op_Odejmij;
-    case '*':wyraz.Op = Op_Mnoz;
-    case '/':wyraz.Op = Op_Dziel;
+    case '+':wyraz.Op = Op_Dodaj; break;
+    case '-':wyraz.Op = Op_Odejmij; break;
+    case '*':wyraz.Op = Op_Mnoz; break;
+    case '/':wyraz.Op = Op_Dziel; break;
   }
-}
+}*/

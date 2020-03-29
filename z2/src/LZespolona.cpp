@@ -41,22 +41,28 @@ LZespolona operator * (LZespolona Skl1, LZespolona Skl2)
   return Wynik;
 }
 
-LZespolona sprzezenie (LZespolona Skl1)
+LZespolona operator / (LZespolona Skl1, double Skl2)
 {
   LZespolona Wynik;
 
-  Wynik.re = Skl1.re;
-  Wynik.im = -Skl1.im;
+  Wynik.re = Skl1.re/Skl2;
+  Wynik.im = Skl1.im/Skl2;
   return Wynik;
 }
 
-LZespolona modul (LZespolona Skl1)
+LZespolona sprzezenie (LZespolona Skl1)
 {
-  LZespolona wynik;
+  Skl1.im = -Skl1.im;
+  return Skl1;
+}
 
-  wynik.re = pow(pow(Skl1.re, 2) + pow(Skl1.im, 2), 0.5);
-  wynik.im = 0
-  return wynik;
+double modul2 (LZespolona Skl1)
+{
+  double Wynik;
+
+  Wynik = (Skl1.re*Skl1.re+Skl1.im*Skl1.im);
+
+  return Wynik;
 }
 
 
@@ -64,13 +70,27 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  LZespolona modul = modul(Skl2);
-  LZespolona sprzezenie = sprzezenie(Skl2);
-  LZespolona licznik = Skl1 * sprzezenie
+  Wynik = Skl1*sprzezenie(Skl2)/modul2(Skl2);
 
-  Wynik.re = licznik.re/(modul.re * modul.re);
-  Wynik.im = licznik.im/(modul.re * modul.re);
   return Wynik;
+}
+
+bool operator == (LZespolona Skl1, LZespolona Skl2)
+{
+  if (Skl1.re == Skl2.re && Skl1.im == Skl2.im)
+    return true;
+  else 
+  {
+  return false;
+  }
+}
+
+bool operator != (LZespolona Skl1, LZespolona Skl2)
+{
+  if (Skl1.re != Skl2.re || Skl1.im != Skl2.im)
+    return true;
+  else
+    return false;
 }
 
 LZespolona utworz(double re, double im)
@@ -81,9 +101,10 @@ LZespolona utworz(double re, double im)
   return Z;
 }
 
-void wyswietl(LZespolona Z)
+std::ostream & operator << (std::ostream & strm, const LZespolona & Z)
 {
-  cout<<"("<<Z.re<<std::showpos<<Z.im<<std::noshowpos<<"i)"<<std::endl;
+  strm<<"("<<Z.re<<std::showpos<<Z.im<<std::noshowpos<<"i)";
+  return strm;
 }
 
 std::istream & operator >> (std::istream & strm, LZespolona &Z1)
@@ -99,8 +120,11 @@ std::istream & operator >> (std::istream & strm, LZespolona &Z1)
     Z1.im=(-Z1.im);
   strm>>znak;
   if(znak!='i')
+  {
     strm.setstate(std::ios::failbit);
-    strm>>znak;
+  }
+  strm>>znak;
   if(znak!=')')
     strm.setstate(std::ios::failbit);
+  return strm;
 }
