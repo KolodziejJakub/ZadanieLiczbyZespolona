@@ -4,20 +4,20 @@
 #include "Statystyki.hh"
 #include "WyrazenieZesp.hh"
 
-using namespace std;
-
-
+using std::cout;
+using std::cin;
+using std::endl;
 
 
 int main(int argc, char **argv)
 {
-  LZespolona OdpoUzytkownika, Poprawna;
+  LZespolona OdpoUzytkownika;
 
   if (argc < 2) {
-    cout << endl;
-    cout << " Brak opcji okreslajacej rodzaj testu." << endl;
-    cout << " Dopuszczalne nazwy to:  latwy, trudny." << endl;
-    cout << endl;
+    std::cout << std::endl;
+    std::cout << " Brak opcji okreslajacej rodzaj testu." << std::endl;
+    std::cout << " Dopuszczalne nazwy to:  latwy, trudny." << std::endl;
+    std::cout << std::endl;
     return 1;
   }
 
@@ -25,37 +25,35 @@ int main(int argc, char **argv)
   BazaTestu   BazaT = { nullptr, 0, 0 };
 
   if (InicjalizujTest(&BazaT,argv[1]) == false) {
-    cerr << " Inicjalizacja testu nie powiodla sie." << endl;
+    std::cerr << " Inicjalizacja testu nie powiodla sie." << std::endl;
     return 1;
   }
 
 
   
-  cout << endl;
-  cout << " Start testu arytmetyki zespolonej: " << argv[1] << endl;
-  cout << endl;
+  std::cout << std::endl;
+  std::cout << " Start testu arytmetyki zespolonej: " << argv[1] << std::endl;
+  std::cout << std::endl;
 
   WyrazenieZesp   WyrZ_PytanieTestowe;
   statystyki stats;
   
   while (PobierzNastpnePytanie(&BazaT,&WyrZ_PytanieTestowe)) {
-    cout << " Oblicz: ";
-    cout << WyrZ_PytanieTestowe << endl;
+    std::cout << " Oblicz: ";
+    std::cout << WyrZ_PytanieTestowe << endl;
     stats.IloscPytan++;
 
-    Poprawna = Oblicz(WyrZ_PytanieTestowe);
-    cout << Poprawna<< endl;
-    cout <<" Twoja odpowiedz: ";
+    std::cout <<" Twoja odpowiedz: ";
 
     for(int i=0; i<3; i++)
     {
-      cin >> OdpoUzytkownika;
+      std::cin >> OdpoUzytkownika;
       if(!cin.good())
       {
-        cout << endl << " Blad. Sprobuj ponownie" << endl;
+        std::cout << std::endl << " Blad. Sprobuj ponownie" << std::endl;
         cin.clear();
         cin.ignore(1000,'\n');
-        cout <<" Twoja odpowiedz: ";
+        std::cout <<" Twoja odpowiedz: ";
       }
       else break;
     }
@@ -63,18 +61,18 @@ int main(int argc, char **argv)
     if (OdpoUzytkownika == Oblicz(WyrZ_PytanieTestowe))
     {
       stats.DobrychOdpo++;
-      cout << " Odpowiedz poprawna" << endl;
+      std::cout << " Odpowiedz poprawna" << std::endl;
     }
     else
     {
-      cerr<<" Blad. Prawidlowy wynik to:" << Oblicz(WyrZ_PytanieTestowe) << endl;
+      std::cerr<<" Blad. Prawidlowy wynik to:" << Oblicz(WyrZ_PytanieTestowe) << std::endl;
     }
   }
 
-  cout << " Ilosc dobrych odpowiedzi: " << stats.DobrychOdpo << "/" << stats.IloscPytan << endl;
-  cout << " Wynik procentowy testu:" << ObliczProcent(stats) << "%" << endl;
+  std::cout << " Ilosc dobrych odpowiedzi: " << stats.DobrychOdpo << "/" << stats.IloscPytan << std::endl;
+  std::cout << " Wynik procentowy testu:" << ObliczProcent(stats) << "%" << std::endl;
 
-  cout << endl;
-  cout << " Koniec testu" << endl;
-  cout << endl;
+  std::cout << std::endl;
+  std::cout << " Koniec testu" << std::endl;
+  std::cout << std::endl;
 }
